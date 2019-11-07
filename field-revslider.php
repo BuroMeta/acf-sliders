@@ -2,12 +2,12 @@
 /**
  *
  * Revolution Slider Field
- * 
+ *
  */
-if ( !defined( 'ABSPATH' )) die(-1); 
+if ( !defined( 'ABSPATH' )) die(-1);
 class WPPress_RevolutionSlider_ACF_Field extends WPPress_ACF_Field
 {
-	
+
 	function __construct() {
 		$this->label = 'Revolution Slider';
 		parent::__construct();
@@ -21,13 +21,13 @@ class WPPress_RevolutionSlider_ACF_Field extends WPPress_ACF_Field
 	 */
 	function slider_output($data = NULL) {
 		ob_start();
-		$rev = RevSliderOutput::putSlider($data);
+		print do_shortcode('[rev_slider alias="slider-'.$data.'"][/rev_slider]');
 		$slider = ob_get_contents();
 		ob_clean();
 		ob_end_clean();
 		return $slider;
 	}
-	
+
 	/**
 	 * Will return all the Gallery Slider in array in format(id=>name)
 	 * @method sliders_data
@@ -35,10 +35,9 @@ class WPPress_RevolutionSlider_ACF_Field extends WPPress_ACF_Field
 	 * @return array id=>label
 	 */
 	function slider_data() {
-		$slider = new RevSlider();
+		$slider = new RevSliderSlider();
 		$sliders = $slider->getArrSlidersShort();
 		$data = array();
-		$data[0] = 'none';
 		if (!empty($sliders)) {
 			foreach ($sliders as $key => $val) {
 				$data[$key] = $val;
